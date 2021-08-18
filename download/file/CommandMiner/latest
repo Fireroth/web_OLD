@@ -2,10 +2,17 @@
 if not exist Command_Miner_Data md Command_Miner_Data
 cd Command_Miner_Data
 if errorlevel=1 echo Failed to create folder!!! & pause >nul & exit
+if not exist Command_Miner_Update md Command_Miner_Update
+cd Command_Miner_Update
+if errorlevel=1 echo Failed to create folder!!! & pause >nul & exit
+if not exist Update.bat echo cd.. ^& cd.. ^& curl https://fireroth.netlify.app/download/file/commandMiner/latest^>CommandMiner.bat ^& cd Command_Miner_Data ^& cd Command_Miner_Update ^& start Updated.vbs ^& exit>Update.bat
+if not exist Updated.vbs echo X=MsgBox("Successfully installed latest version (Command Miner)",0+64,"Updated")>Updated.vbs
+cd..
 
 set cheats=false
 set command=invalid
 set cheatPermission=true
+set ver=1.0.2
 
 if not exist pickaxe.cmd set pickaxe=Wooden
 if not exist backpack.cmd set backpack=Wooden
@@ -122,6 +129,9 @@ if %command% == openrare goto openCrateRare
 if %command% == openepic goto openCrateEpic
 if %command% == openlegendary goto openCrateLegendary
 if %command% == crates goto allCrates
+if %command% == update goto Update
+if %command% == version echo. &echo Current version: %ver%&goto cmdselect
+if %command% == tokenshop goto tokenShop
 
 REM Aliases
 if %command% == m goto mine
@@ -156,6 +166,9 @@ if %command% == ouncommon goto openCrateUnommon
 if %command% == orare goto openCrateRare
 if %command% == oepic goto openCrateEpic
 if %command% == olegendary goto openCrateLegendary
+if %command% == ver echo. &echo Current version: %ver%&goto cmdselect
+if %command% == tshop goto tokenShop
+if %command% == ts goto tokenShop
 
 REM cheats
 if %command% == cheat_moremoney if %cheatPermission%==false (goto noPerms) else set /a money=%money%+2500 & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
@@ -258,11 +271,11 @@ goto cmdselect
 
 :shop
 echo.
-echo Stone = 250^$
-echo Iron = 750^$
-echo Golden = 2 000^$
-echo Diamond = 3 500^$
-echo Emerald = 5 000^$
+echo Stone tier = 250^$
+echo Iron tier = 750^$
+echo Golden tier = 2 000^$
+echo Diamond tier = 3 500^$
+echo Emerald tier = 5 000^$
 goto cmdselect
 
 
@@ -274,6 +287,11 @@ echo Money: %money%^$
 echo Tokens: %token%
 echo %orename%: %ore%
 set /a totalCrates=%commonCrate%+%uncommonCrate%+%rareCrate%+%epicCrate%+%legendaryCrate%
+echo Common crates: %commonCrate%
+echo Uncommon crates: %uncommonCrate%
+echo Rare crates: %rareCrate%
+echo Epic crates: %epicCrate%
+echo Legendary crates: %legendaryCrate%
 echo Crates in total: %totalCrates%
 goto cmdselect
 
@@ -344,6 +362,7 @@ echo ouncommon = Open uncommon crate
 echo orare = Open rare crate
 echo oepic = Open epic crate
 echo olegendary = Open legendary crate
+echo update = Update CM to latest version
 echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 goto cmdselect
 
@@ -526,6 +545,27 @@ goto cmdselect
 :noPerms
 echo You don't have permission for that command!
 goto cmdselect
+
+
+:update
+echo.
+echo Are you sure you want to download latest version of Command Miner 
+echo from https://fireroth.netlify.app/download/file/commandMiner/latest?
+echo (Y/N)
+set /p UpdateYOrN=
+if %updateYOrN%==y (cd Command_Miner_Update & start /min Update.bat & exit) else goto cmdselect
+
+
+:tokenShop
+echo.
+echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo WIP
+echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+goto cmdselect
+
+
+
+
 
 
 
