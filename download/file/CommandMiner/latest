@@ -1,19 +1,22 @@
 :reload
-if not exist Command_Miner_Data md Command_Miner_Data
+@echo off
+echo Starting up...
+if not exist Command_Miner_Data md Command_Miner_Data & echo Creating folder...
 cd Command_Miner_Data
 if errorlevel=1 echo Failed to create folder!!! & pause >nul & exit
-if not exist Command_Miner_Update md Command_Miner_Update
+if not exist Command_Miner_Update md Command_Miner_Update & echo Creating folder...
 cd Command_Miner_Update
 if errorlevel=1 echo Failed to create folder!!! & pause >nul & exit
+echo Setting up update features...
 if not exist Update.bat echo cd.. ^& cd.. ^& curl https://fireroth.netlify.app/download/file/commandMiner/latest^>CommandMiner.bat ^& cd Command_Miner_Data ^& cd Command_Miner_Update ^& start Updated.vbs ^& exit>Update.bat
-if not exist Updated.vbs echo X=MsgBox("Successfully installed latest version (Command Miner)",0+64,"Updated")>Updated.vbs
+if not exist Updated.vbs echo X=MsgBox("Successfully installed latest version.",0+64,"Updated Command Miner")>Updated.vbs
 cd..
 
+echo Setting up crash handler...
 set cheats=false
 set command=invalid
 set cheatPermission=true
-set ver=1.0.2
-
+set ver=1.0.3
 if not exist pickaxe.cmd set pickaxe=Wooden
 if not exist backpack.cmd set backpack=Wooden
 if not exist money.cmd set money=0
@@ -26,6 +29,7 @@ if not exist rareCrate.cmd set /a rareCrate=0
 if not exist epicCrate.cmd set /a epicCrate=0
 if not exist legendaryCrate.cmd set /a legendaryCrate=0
 
+echo Calling saved files...
 call backpack.cmd
 call pickaxe.cmd
 call money.cmd
@@ -40,20 +44,20 @@ call legendaryCrate.cmd
 
 
 
-@echo off
+
 mode con cols=120 lines=30
 
 
 :main
-echo 				---------------------------------------------
+echo 				[1;36m---------------------------------------------[0;0m 
 echo.
 echo                  				Command Miner
 echo.
-echo 				---------------------------------------------
+echo 				[1;36m---------------------------------------------[0;0m 
 echo.
 echo.
-echo Use "help" for list of all available commands
-echo Use "save" to save your progress
+echo [0;91mUse "help" for list of all available commands[0;0m 
+echo [0;91mUse "save" to save your progress[0;0m 
 
 :cmdselect
 
@@ -102,7 +106,7 @@ echo.
 set /p command=Enter command:
 if %command% == mine goto mine
 if %command% == sell goto sell
-if %command% == invalid echo Please enter valid command!
+if %command% == invalid echo [0;31mPlease enter valid command![0;0m
 if %command% == stats goto stats
 if %command% == clear cls
 if %command% == shop goto shop
@@ -178,6 +182,7 @@ if %command% == cheat_moretokens if %cheatPermission%==false (goto noPerms) else
 if %command% == cheat_bestore if %cheatPermission%==false (goto noPerms) else set oreName=Emerald & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
 if %command% == cheat_givemecrates if %cheatPermission%==false (goto noPerms) else set /a commonCrate=%commonCrate%+3 & set /a uncommonCrate=%uncommonCrate%+3 & set /a rareCrate=%rareCrate%+3 & set /a epicCrate=%epicCrate%+3 & set /a legendaryCrate=%legendaryCrate%+3 & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
 
+echo [0;31mPlease enter valid command![0;0m
 goto cmdselect
 
 
@@ -186,9 +191,9 @@ if %ore%==0 goto noOre
 set /a transfer=%ore%*%multi%
 set /a money=%money%+(%ore%*%multi%)
 echo.
-echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo [0;32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 echo You sold %ore% %orename% for %transfer%^$
-echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo [0;32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 set /a ore=0
 set command=invalid
 goto cmdselect
@@ -271,11 +276,13 @@ goto cmdselect
 
 :shop
 echo.
+echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 echo Stone tier = 250^$
 echo Iron tier = 750^$
 echo Golden tier = 2 000^$
 echo Diamond tier = 3 500^$
 echo Emerald tier = 5 000^$
+echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 goto cmdselect
 
 
@@ -332,20 +339,20 @@ goto cmdselect
 
 :oreInfo
 echo.
-echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 echo Coal = 1x sell price
 echo Iron = 1x sell price
 echo Lapis = 2x sell price
 echo Gold = 2x sell price
 echo Diamond = 3x sell price
 echo Emerald = 4x sell price
-echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 goto cmdselect
 
 
 :help
 echo.
-echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 echo mine = Mine ores
 echo sell = Sell ores that you mined
 echo upgradepick = Upgrade your pickaxe
@@ -363,7 +370,7 @@ echo orare = Open rare crate
 echo oepic = Open epic crate
 echo olegendary = Open legendary crate
 echo update = Update CM to latest version
-echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 goto cmdselect
 
 
@@ -532,13 +539,13 @@ goto cmdselect
 
 :allCrates
 echo.
-echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 echo Common:%commonCrate%
 echo Uncommon:%uncommonCrate%
 echo Rare:%rareCrate%
 echo Epic:%epicCrate%
 echo Legendary:%legendaryCrate%
-echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 goto cmdselect
 
 
@@ -553,14 +560,16 @@ echo Are you sure you want to download latest version of Command Miner
 echo from https://fireroth.netlify.app/download/file/commandMiner/latest?
 echo (Y/N)
 set /p UpdateYOrN=
-if %updateYOrN%==y (cd Command_Miner_Update & start /min Update.bat & exit) else goto cmdselect
+if %updateYOrN%==y cd Command_Miner_Update & start /min Update.bat & exit
+if %updateYOrN%==n goto cmdselect
+goto update
 
 
 :tokenShop
 echo.
-echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 echo WIP
-echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 goto cmdselect
 
 
