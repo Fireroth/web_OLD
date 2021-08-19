@@ -16,7 +16,7 @@ echo Setting up crash handler...
 set cheats=false
 set command=invalid
 set cheatPermission=true
-set ver=1.0.3
+set ver=1.0.0
 if not exist pickaxe.cmd set pickaxe=Wooden
 if not exist backpack.cmd set backpack=Wooden
 if not exist money.cmd set money=0
