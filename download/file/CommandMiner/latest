@@ -45,7 +45,7 @@ call uncommonCrate.cmd
 call rareCrate.cmd
 call epicCrate.cmd
 call legendaryCrate.cmd
-
+call minimumMined.cmd
 
 
 
@@ -411,6 +411,7 @@ echo upgradeore = Upgrade your ore
 echo clear = Clear your screen
 echo reload = Reload Command Miner
 echo shop = Upgrade prices
+echo tokenshop = Place where you can spend your Tokens
 echo save = Save your progress
 echo oreinfo = Info about ores
 echo crates = Shows how many crates you have
@@ -443,6 +444,7 @@ echo set /a uncommonCrate=%uncommonCrate% > uncommonCrate.cmd
 echo set /a rareCrate=%rareCrate% > rareCrate.cmd
 echo set /a epicCrate=%epicCrate% > epicCrate.cmd
 echo set /a legendaryCrate=%legendaryCrate% > legendaryCrate.cmd
+echo set /a minimumMined=%minimumMined% > minimumMined.cmd
 
 echo Saved!
 goto cmdselect
@@ -517,6 +519,7 @@ set uncommonCrate=0
 set rareCrate=0
 set epicCrate=0
 set legendaryCrate=0
+set minimumMined=0
 
 cls
 echo Done, reset was successful
