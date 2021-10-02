@@ -7,7 +7,7 @@ footer {
     bottom: 0pt;
 }
 footer span{
-  font-size: 1.3vw;
+  font-size: 20px;
 }
 
 body {
@@ -17,20 +17,20 @@ body {
 }
 
 h1{
-font-size:5vw;
+font-size:80px;
 font-weight:800;
 font-family: 'Roboto', sans-serif;
 }
 
 h2{
-font-size:2vw;
+font-size:25px;
 font-family: 'Roboto', sans-serif;
 
 }
 
 p{
 text-align:center;
-font-size:1.5vw;
+font-size:20px;
 font-weight:700;
 font-family: 'Roboto', sans-serif;
 }
@@ -43,7 +43,7 @@ content-content: center;
 }
 
 a{
-font-size:1.5vw;
+font-size:20px;
 font-weight:700;
 font-family: 'Roboto', sans-serif;
 }
@@ -52,6 +52,7 @@ font-family: 'Roboto', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   height: 80px;
 }
 
@@ -86,13 +87,13 @@ button{
   border: none;
   color: #FFFFFF;
   text-align: center;
-  font-size: 1.6vw;
+  font-size: 28px;
   padding: 20px;
   width: 400px;
   cursor: pointer;
   transition: all 0.3s;
   margin: 5px;
-  width: 25vw;
+  width: 400px;
 }
 
 .buttonnext span {
@@ -123,7 +124,7 @@ button{
 .buttonfade:hover {
   background-color: #107871;
   border-radius: 4px;
-  width: 25vw;
+  width: 400px;
 }
 
 
