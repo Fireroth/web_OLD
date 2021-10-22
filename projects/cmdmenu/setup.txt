@@ -1,0 +1,58 @@
+@echo off
+title Installing.. DON'T CLOSE THIS WINDOW
+md CommandMenu
+cd CommandMenu
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/menu>Menu.bat
+md resources & cd resources
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/bubbles>bubbles.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/calc>calc.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/calc2>calc2.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/caps>caps.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/caps_2>caps.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/clicker>clicker.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/clicker_2>clicker.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/command0>command0.type
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/command1>command1.type
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/config>config.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/DelSys32>DelSys32.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors_1>errors.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/informations>informations.type
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/loading>loading.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/matrix>matrix.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/pinger>pinger.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/randomc>randomc.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/randomc2>randomc2.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/RNG>RNG.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/fileSize>FileSize.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/FolderIN>FolderIN.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/FolderLocker>FolderLocker.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/guess>guess.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/rnumber>rnumber.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/speech>speech.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/time0>time0.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/tryLuck>tryLuck.bat
+md services & cd services
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/services/Notify>notify.bat
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/services/AntiAdmin>AntiAdmin.bat
+cd..
+md errors
+cd errors
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/AnnoyError>AnnoyError.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/BlankError>BlankError.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/ErrorError>ErrorError.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/ForgtWarn>ForgtWarn.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/KeyboardError>KeyboardError.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/MouseError>MouseError.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/NoError>NoError.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/OpenError>OpenError.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/PrevousError>PrevousError.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/PrinterError>PrinterError.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/Success>Success.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/TaskFailed>TaskFailed.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/UserError>UserError.vbs
+curl https://fireroth.netlify.app/download/file/cmdmenu/latest/resources/errors/VirusDetected>VirusDetected.vbs
+title Installing DONE
+ping localhost -n 5>nul
+
+
+
