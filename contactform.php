@@ -10,5 +10,5 @@
     $txt = "You have recieved an email from".$name.".\n\n".$message;
 
     mail($mailTo, $subject, $txt, $headers);
-    header("Location: /ssck/mail/?mailsend");
+    header("Location: /ssck/mail.html?mailsend");
  }
