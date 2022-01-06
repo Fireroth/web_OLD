@@ -6,7 +6,7 @@ if %errorlevel% == 0 (
 )
 echo [0;94m[PreStartup][0;0m Checking internet connection...
 ping www.google.com -n 1 -w 1000>nul
-if errorlevel 1 (set internet=none& goto ErrorInternet) else (echo [0;94m[PreStartup][0;0m Connected)
+if errorlevel 1 (set internet=none& goto ErrorInternet) else (set internet=connected & echo [0;94m[PreStartup][0;0m Connected)
 
 :reload
 setlocal EnableDelayedExpansion
