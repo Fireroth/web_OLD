@@ -1,5 +1,4 @@
 @echo off
-chcp 65001
 echo [0;94m[PreStartup][0;0m Checking permissions...
 net session >nul 2>&1
 if %errorlevel% == 0 (
@@ -21,7 +20,7 @@ if not exist Command_Miner_Update md Command_Miner_Update & echo [0;94m[Startup
 cd Command_Miner_Update & echo [0;94m[Startup][0;0m Entering Command_Miner_Update folder
 if errorlevel=1 echo [0;94m[Startup][0;0m Failed to create folder! & pause >nul & exit
 echo [0;94m[Startup][0;0m Setting up update feature...
-if not exist Update.bat echo cd.. ^& cd.. ^& curl https://fireroth.netlify.app/download/data/commandMiner/latest^>CommandMiner.bat ^& cd Command_Miner_Data ^& cd Command_Miner_Update ^& start Updated.vbs ^& exit>Update.bat
+if not exist Update.bat echo cd.. ^& cd.. ^& curl https://fireroth.github.io/download/data/CommandMiner/latest^>CommandMiner.bat ^& cd Command_Miner_Data ^& cd Command_Miner_Update ^& start Updated.vbs ^& exit>Update.bat
 if not exist Updated.vbs echo X=MsgBox("Successfully installed latest version.",0+64,"Updated Command Miner")>Updated.vbs
 cd..
 if not exist Config md Config & echo [0;94m[Startup][0;0m Creating Config folder
@@ -117,7 +116,7 @@ echo [0;94m[Startup][0;0m Setting up important stuff...
 set cheats=false
 set command=invalid
 set cheatPermission=false
-set ver=1.0.4
+set ver=1.0.3 MV
 
 set /a minimumMined = 0
 set pickaxe=Wooden
@@ -133,8 +132,6 @@ set /a epicCrate=0
 set /a legendaryCrate=0
 set dimension=Overworld
 set /a rebirthReward=0
-set /a autosell=0
-set /a rebirthCount=0
 
 cd save & echo [0;94m[Startup][0;0m Entering Save folder
 echo [0;94m[Startup][0;0m Calling saved files...
@@ -151,23 +148,15 @@ cd..
 
 cls
 :main
-curl https://fireroth.netlify.app/download/data/commandMiner/logo
+curl https://fireroth.github.io/download/data/CommandMiner/logo
 echo.
 echo.
 echo [0;91mUse [0;93mhelp[0;0m[0;91m for list of all available commands[0;0m 
 echo [0;91mUse [0;93msave[0;0m[0;91m to save your progress[0;0m
+echo [0;91mMoved version[0;0m
 
 :cmdselect
 set title=Command Miner       Money: %money%^$      Tokens: %token%      Pickaxe: %pickaxe%      Backpack: %backpack%      Ore: %orename%
-if %autosell%==1 (if %ore% == %maxBPSize% goto sell) else echo.>nul
-
-set tier1=300
-set tier2=1000
-set tier3=3500
-set tier4=8000
-set tier5=13000
-set tier6=25000
-set tier7=0
 
 if %oreName%== Coal set /a multi=1
 if %oreName%== Iron set /a multi=1
@@ -193,12 +182,12 @@ if %orename% == Lapis set nextore=Gold
 if %orename% == Iron set nextore=Lapis
 if %orename% == Coal set nextore=Iron
 
-if %pickaxe% == Emerald set /a upPickPrice=%tier6%
-if %pickaxe% == Diamond set /a upPickPrice=%tier5%
-if %pickaxe% == Golden set /a upPickPrice=%tier4%
-if %pickaxe% == Iron set /a upPickPrice=%tier3%
-if %pickaxe% == Stone set /a upPickPrice=%tier2%
-if %pickaxe% == Wooden set /a upPickPrice=%tier1%
+if %pickaxe% == Emerald set /a upPickPrice=12000
+if %pickaxe% == Diamond set /a upPickPrice=6000
+if %pickaxe% == Golden set /a upPickPrice=3500
+if %pickaxe% == Iron set /a upPickPrice=2000
+if %pickaxe% == Stone set /a upPickPrice=750
+if %pickaxe% == Wooden set /a upPickPrice=250
 
 if %pickaxe% == Wooden set maxMined=10
 if %pickaxe% == Stone set maxMined=20
@@ -224,12 +213,12 @@ if %backpack% == Emerald set maxBPSize=700
 if %backpack% == Netherite set maxBPSize=1200
 if %backpack% == Infinite set maxBPSize=nul
 
-if %backpack% == Emerald set /a upBPPrice=%tier6%
-if %backpack% == Diamond set /a upBPPrice=%tier5%
-if %backpack% == Golden set /a upBPPrice=%tier4%
-if %backpack% == Iron set /a upBPPrice=%tier3%
-if %backpack% == Stone set /a upBPPrice=%tier2%
-if %backpack% == Wooden set /a upBPPrice=%tier1%
+if %backpack% == Emerald set /a upBPPrice=12000
+if %backpack% == Diamond set /a upBPPrice=6000
+if %backpack% == Golden set /a upBPPrice=3500
+if %backpack% == Iron set /a upBPPrice=2000
+if %backpack% == Stone set /a upBPPrice=750
+if %backpack% == Wooden set /a upBPPrice=250
 
 if %backpack% == Emerald set nextbp=Netherite
 if %backpack% == Diamond set nextbp=Emerald
@@ -257,9 +246,6 @@ if %rebirthReward% == 0 set nextRebirthReward=1
 if %rebirthReward% == 0 set /a tokenPlus=1
 if %rebirthReward% == 1 set /a tokenPlus=2
 
-if %autosell% == 0 set /a upAutosellPrice=10
-if %autosell% == 1 set /a upAutosellPrice=0
-
 title %title%
 echo.
 set /p "command=Enter command:"
@@ -275,6 +261,8 @@ if "%command%" == "invalid" echo [0;31mPlease enter valid command![0;0m & goto
 if "%command%" == "stats" goto stats
 if "%command%" == "clear" cls & goto cmdselect
 if "%command%" == "shop" goto shop
+::if "%command%" == boostshop goto boostshop
+::if "%command%" == "bshop" goto bpshop
 if "%command%" == "reload" cls & cd.. & goto reload
 if "%command%" == "help" goto help
 if "%command%" == "save" goto saveProgress
@@ -298,7 +286,6 @@ if "%command%" == "crates" goto allCrates
 if "%command%" == "update" goto Update
 if "%command%" == "version" goto version
 if "%command%" == "tokenshop" goto tokenShop
-if "%command%" == "tokenshop2" goto tokenShop2
 if "%command%" == "buy1" goto upgradeMinMined
 if "%command%" == "allcommands" goto allcomm
 if "%command%" == "open" echo Invalid syntax, use [0;93mopen CRATE_NAME[0;0m & goto cmdselect
@@ -308,8 +295,7 @@ if "%command%" == "exit" echo Exiting... & endlocal & exit
 if "%command%" == "set help" goto setHelp
 if "%command%" == "set /?" goto setHelp
 if "%command%" == "buy2" goto upgradeRebirthReward
-if "%command%" == "buy3" goto upgradeAutosell
-::if "%command%" == "changelog" goto changeLog
+if "%command%" == "changelog" goto changeLog
 
 REM Aliases
 if "%command%" == "m" goto mine
@@ -318,6 +304,7 @@ if "%command%" == "c" cls & goto cmdselect
 if "%command%" == "cls" cls & goto cmdselect
 if "%command%" == "bshop" goto boostshop
 if "%command%" == "ps" goto shop
+::if "%command%" == "bs" goto boostshop
 if "%command%" == "u p" goto upgradePick
 if "%command%" == "up p" goto upgradePick
 if "%command%" == "up pick" goto upgradePick
@@ -348,19 +335,17 @@ if "%command%" == "o epic" goto openCrateEpic
 if "%command%" == "o legendary" goto openCrateLegendary
 if "%command%" == "ver" goto version
 if "%command%" == "tshop" goto tokenShop
-if "%command%" == "tshop2" goto tokenShop2
 if "%command%" == "ts" goto tokenShop
-if "%command%" == "ts2" goto tokenShop2
 if "%command%" == "allcomm" goto allcomm
 if "%command%" == "o" echo Invalid syntax, use [0;93mo CRATE_NAME[0;0m & goto cmdselect
 
 
 REM cheats
 if "%command%" == "cheat_moremoney" if not %cheatPermission%==true (goto noPerms) else set /a money=%money%+2500 & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
-if "%command%" == "cheat_bestpickaxe" if not %cheatPermission%==true (goto noPerms) else set pickaxe=Netherite & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
-if "%command%" == "cheat_bestbackpack" if not %cheatPermission%==true (goto noPerms) else set backpack=Netherite & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
+if "%command%" == "cheat_bestpickaxe" if not %cheatPermission%==true (goto noPerms) else set pickaxe=Emerald & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
+if "%command%" == "cheat_bestbackpack" if not %cheatPermission%==true (goto noPerms) else set backpack=Emerald & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
 if "%command%" == "cheat_moretokens" if not %cheatPermission%==true (goto noPerms) else set /a token=%token%+5 & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
-if "%command%" == "cheat_bestore" if not %cheatPermission%==true (goto noPerms) else set oreName=Netherite & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
+if "%command%" == "cheat_bestore" if not %cheatPermission%==true (goto noPerms) else set oreName=Emerald & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
 if "%command%" == "cheat_givemecrates" if not %cheatPermission%==true (goto noPerms) else set /a commonCrate=%commonCrate%+3 & set /a uncommonCrate=%uncommonCrate%+3 & set /a rareCrate=%rareCrate%+3 & set /a epicCrate=%epicCrate%+3 & set /a legendaryCrate=%legendaryCrate%+3 & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
 
 REM debug
@@ -406,20 +391,21 @@ goto cmdselect
 
 :mine
 if %ore% == %maxBPSize% goto maxBackPack 
+
 set /a crateChance=%random% %% 75
 if %crateChance%==25 set /a commonCrate=%commonCrate%+1 & echo [0;33mYou got 1 Common crate![0;0m
 
 set /a crateChance1=%random% %% 100
-if %crateChance1%==55 set /a uncommonCrate=%uncommonCrate%+1 & echo [0;33mYou got 1 Uncommon crate![0;0m
+if %crateChance1%==55 set /a uncommonCrate=%uncommonCrate%+1 & echo[0;33mYou got 1 Uncommon crate![0;0m
 
 set /a crateChance2=%random% %% 200
-if %crateChance2%==122 set /a rareCrate=%rareCrate%+1 & echo [0;33mYou got 1 Rare crate![0;0m
+if %crateChance2%==122 set /a rareCrate=%rareCrate%+1 & echo[0;33mYou got 1 Rare crate![0;0m
 
 set /a crateChance3=%random% %% 450
-if %crateChance3%==185 set /a epicCrate=%epicCrate%+1 & echo [0;33mYou got 1 Epic crate![0;0m
+if %crateChance3%==185 set /a epicCrate=%epicCrate%+1 & echo[0;33mYou got 1 Epic crate![0;0m
 
 set /a crateChance4=%random% %% 850 
-if %crateChance4%==468 set /a legendaryCrate=%legendaryCrate%+1 & echo [0;33mYou got 1 Legendary crate![0;0m
+if %crateChance4%==468 set /a legendaryCrate=%legendaryCrate%+1 & echo[0;33mYou got 1 Legendary crate![0;0m
 
 
 
@@ -430,7 +416,6 @@ set /a ore=%ore% + %oremined%
 if %ore% GTR %maxBPSize% set /a ore=%maxBPSize%
 echo You mined %oremined% %orename%
 echo Now you have %ore% %orename%
-
 set command=invalid
 goto cmdselect
 
@@ -458,15 +443,6 @@ if %rebirthReward%== 1 goto maxLevelRebirthReward
 if %token% LSS %upRebirthRewardPrice% goto lowTokenRebirthReward
 set /a token=%token%-%upRebirthRewardPrice% & set rebirthReward=%nextRebirthReward%
 echo You successfully upgraded "Rebirth token reward" to %nextRebirthReward% level.
-
-goto cmdselect
-
-
-:upgradeAutosell
-if %autosell%== 1 goto maxLevelAutosell
-if %token% LSS %upAutosellPrice% goto lowTokenRebirthReward
-set /a token=%token%-%upAutosellPrice% & set autosell=1
-echo You successfully upgraded "Autosell" to 1 level.
 
 goto cmdselect
 
@@ -546,12 +522,6 @@ echo [0;94m[MinMined][0;0m You need %needMoreToken% token(s) more for next upg
 goto cmdselect
 
 :lowTokenRebirthReward
-set /a needMoreToken=%upAutosellPrice%-%token%
-echo [0;94m[Autosell][0;0m You don't have enough tokens!
-echo [0;94m[Autosell][0;0m You need %needMoreToken% token(s) more for next upgrade!
-goto cmdselect
-
-:lowTokenRebirthReward
 set /a needMoreToken=%upMinMinedPrice%-%token%
 echo [0;94m[RebirthReward][0;0m You don't have enough tokens!
 echo [0;94m[RebirthReward][0;0m You need %needMoreToken% token(s) more for next upgrade!
@@ -560,10 +530,6 @@ goto cmdselect
 
 :maxLevelPick
 echo [0;94m[Pickaxe][0;0m You have the max level of your pickaxe.
-goto cmdselect
-
-:maxLevelAutosell
-echo [0;94m[Autosell][0;0m You have the max level of your "autosell" skill.
 goto cmdselect
 
 :maxLevelMinMined
@@ -651,8 +617,6 @@ echo set /a legendaryCrate=%legendaryCrate% >> saveMain.cmd
 echo set /a minimumMined=%minimumMined% >> saveMain.cmd
 echo set dimension=%dimension%>> saveMain.cmd
 echo set /a rebirthReward=%rebirthReward% >> saveMain.cmd
-echo set /a autosell=%autosell% >> saveMain.cmd
-echo set /a rebirthCount=%rebirthCount% >> saveMain.cmd
 cd..
 echo Saved!
 goto cmdselect
@@ -685,7 +649,6 @@ set uncommonCrate=0
 set rareCrate=0
 set epicCrate=0
 set legendaryCrate=0
-set /a rebirthCount=%rebirthCount%+1\
 echo Rebirth was successful
 echo You got %tokenPlus% token(s)
 goto cmdselect
@@ -813,7 +776,7 @@ goto cmdselect
 if %internet%==none echo No internet connection & goto cmdselect
 echo.
 echo Are you sure you want to download latest version of Command Miner from 
-echo https://fireroth.netlify.app/download/data/commandMiner/latest?
+echo https://fireroth.github.io/download/data/CommandMiner/latest?
 echo [Y/N]
 set /p UpdateConfirm=
 if %UpdateConfirm%==y del allcomm.bat &cd Command_Miner_Update & start /min Update.bat & exit
@@ -830,34 +793,17 @@ echo [0;32m^|^|[0;0mUpgrade price: %upMinMinedPrice%
 echo [0;32m^|^|[0;0mUpgrade cmd: buy1
 echo.
 echo [0;36m^|^|[0;0mRebirth token reward
-echo [0;36m^|^|[0;0mCurrent level: %rebirthReward%
+echo [0;36m^|^|[0;0mCurrent level: %rebirthReward%%
 echo [0;36m^|^|[0;0mUpgrade price: %upRebirthRewardPrice%
 echo [0;36m^|^|[0;0mUpgrade cmd: buy2
-echo.
-echo [0;33m^|^|[0;0mAutosell
-echo [0;33m^|^|[0;0mCurrent level: %autosell%
-echo [0;33m^|^|[0;0mUpgrade price: %upAutosellPrice%
-echo [0;33m^|^|[0;0mUpgrade cmd: buy3
 echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
-echo TokenShop 1/2
-goto cmdselect
-
-:tokenShop2
-echo.
-echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
-echo [0;35m^|^|[0;0mMore
-echo [0;35m^|^|[0;0mComming
-echo [0;35m^|^|[0;0mSoon
-echo [0;35m^|^|[0;0m;)
-echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
-echo TokenShop 2/2
 goto cmdselect
 
 
 
 :version 
 echo Current version: %ver%
-curl https://fireroth.netlify.app/download/data/commandMiner/latestVer
+curl https://fireroth.github.io/download/data/CommandMiner/latestVer
 goto cmdselect
 
 :allcomm
