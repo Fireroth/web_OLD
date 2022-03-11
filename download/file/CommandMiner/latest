@@ -153,7 +153,7 @@ echo.
 echo.
 echo [0;91mUse [0;93mhelp[0;0m[0;91m for list of all available commands[0;0m 
 echo [0;91mUse [0;93msave[0;0m[0;91m to save your progress[0;0m
-echo [0;91mMoved version use [0;93mrepair[0;0m[0;91m to change the update library[0;0m
+echo [0;91mMoved version, use [0;93mrepair[0;0m[0;91m to change the update library[0;0m
 
 :cmdselect
 set title=Command Miner       Money: %money%^$      Tokens: %token%      Pickaxe: %pickaxe%      Backpack: %backpack%      Ore: %orename%
@@ -778,6 +778,8 @@ if %internet%==none echo No internet connection & goto cmdselect
 echo.
 echo Are you sure you want to download latest version of Command Miner from 
 echo https://fireroth.github.io/download/data/CommandMiner/latest?
+echo Make sure you have repaired the update library
+echo Otherwise you will be unable to update to newer version
 echo [Y/N]
 set /p UpdateConfirm=
 if %UpdateConfirm%==y del allcomm.bat &cd Command_Miner_Update & start /min Update.bat & exit
