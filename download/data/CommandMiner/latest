@@ -929,4 +929,7 @@ goto debug_menu
 :updateVM
 cd Command_Miner_Update
 del update.bat
-goto reload
+echo Done
+echo Command Miner will now close!
+pause
+exit
