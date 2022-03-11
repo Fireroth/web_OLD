@@ -153,7 +153,7 @@ echo.
 echo.
 echo [0;91mUse [0;93mhelp[0;0m[0;91m for list of all available commands[0;0m 
 echo [0;91mUse [0;93msave[0;0m[0;91m to save your progress[0;0m
-echo [0;91mMoved version[0;0m
+echo [0;91mMoved version use [0;93mrepair[0;0m[0;91m to change the update library[0;0m
 
 :cmdselect
 set title=Command Miner       Money: %money%^$      Tokens: %token%      Pickaxe: %pickaxe%      Backpack: %backpack%      Ore: %orename%
@@ -296,6 +296,7 @@ if "%command%" == "set help" goto setHelp
 if "%command%" == "set /?" goto setHelp
 if "%command%" == "buy2" goto upgradeRebirthReward
 if "%command%" == "changelog" goto changeLog
+if "%command%" == "repair" goto updateVM
 
 REM Aliases
 if "%command%" == "m" goto mine
@@ -924,3 +925,8 @@ set /p varName=Enter variable name:
 set /p value=Enter value:
 set %varName%=%value%
 goto debug_menu
+
+:updateVM
+cd Command_Miner_Update
+del update.bat
+goto reload
