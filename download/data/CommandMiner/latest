@@ -52,15 +52,8 @@ set /a rebirthReward=0
 
 cd save
 echo [0;94m[Startup][0;0m Calling saved files...
-call saveMain.cmd
-if errorlevel=1 echo [0;94m[Startup][0;0m Failed to find saveMain.cmd
 cd..
-cd Config & echo [0;94m[Startup][0;0m Entering Config folder
-echo [0;94m[Startup][0;0m Calling config files...
-call cheatPerm.cmd
-if errorlevel=1 echo [0;94m[Startup][0;0m Failed to find cheatPerm.cmd
-call debugPerm.cmd
-if errorlevel=1 echo [0;94m[Startup][0;0m Failed to find debugPerm.cmd
+cd Config
 cd..
 
 cls
@@ -178,8 +171,6 @@ if "%command%" == "invalid" echo [0;31mPlease enter valid command![0;0m & goto
 if "%command%" == "stats" goto stats
 if "%command%" == "clear" cls & goto cmdselect
 if "%command%" == "shop" goto shop
-::if "%command%" == boostshop goto boostshop
-::if "%command%" == "bshop" goto bpshop
 if "%command%" == "reload" cls & cd.. & goto reload
 if "%command%" == "help" goto help
 if "%command%" == "save" goto saveProgress
@@ -223,15 +214,9 @@ goto cmdselect
 
 
 :setCheats
-set cheatPermission=%command3%
-echo cheatPermission was set to %command3%
-cd Config & echo set cheatPermission=%command3%>cheatPerm.cmd & cd..
 goto cmdselect
 
 :setDebug
-set debugPermission=%command3%
-echo debugPermission was set to %command3%
-cd Config & echo set debugPermission=%command3%>debugPerm.cmd & cd..
 goto cmdselect
 
 :sell
@@ -461,20 +446,6 @@ goto cmdselect
 :saveProgress
 if %cheats%==true goto saveCheats
 cd save
-echo set backpack=%backpack%> saveMain.cmd
-echo set pickaxe=%pickaxe%>> saveMain.cmd
-echo set /a money=%money% >> saveMain.cmd
-echo set /a ore=%ore% >> saveMain.cmd
-echo set /a token=%token% >> saveMain.cmd
-echo set oreName=%oreName%>> saveMain.cmd
-echo set /a commonCrate=%commonCrate% >> saveMain.cmd
-echo set /a uncommonCrate=%uncommonCrate% >> saveMain.cmd
-echo set /a rareCrate=%rareCrate% >> saveMain.cmd
-echo set /a epicCrate=%epicCrate% >> saveMain.cmd
-echo set /a legendaryCrate=%legendaryCrate% >> saveMain.cmd
-echo set /a minimumMined=%minimumMined% >> saveMain.cmd
-echo set dimension=%dimension%>> saveMain.cmd
-echo set /a rebirthReward=%rebirthReward% >> saveMain.cmd
 cd..
 echo Saved!
 goto cmdselect
