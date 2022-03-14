@@ -8,31 +8,20 @@ echo [0;94m[PreStartup][0;0m Checking internet connection...
 ping www.google.com -n 1 -w 1000>nul
 if errorlevel 1 (set internet=none& goto ErrorInternet) else (set internet=connected & echo [0;94m[PreStartup][0;0m Connected)
 
-:reload
 setlocal EnableDelayedExpansion
 mode con cols=120 lines=30
 @echo off
 echo Starting up...
-cd Command_Miner_Data & echo [0;94m[Startup][0;0m Entering Command_Miner_Data folder
-if errorlevel=1 echo [0;94m[Startup][0;0m Failed to create folder! & pause >nul & exit
-cd Command_Miner_Update & echo [0;94m[Startup][0;0m Entering Command_Miner_Update folder
+cd Command_Miner_Data
+cd Command_Miner_Update
 echo [0;94m[Startup][0;0m Setting up update feature...
 if not exist Update.bat echo cd.. ^& cd.. ^& curl https://fireroth.github.io/download/data/CommandMiner/latest^>CommandMiner.bat ^& cd Command_Miner_Data ^& cd Command_Miner_Update ^& start Updated.vbs ^& exit>Update.bat & goto update
 if not exist Updated.vbs echo X=MsgBox("Successfully installed latest version.",0+64,"Updated Command Miner")>Updated.vbs
 cd..
-if not exist Config md Config & echo [0;94m[Startup][0;0m Creating Config folder
-cd Config & if not exist cheatPerm.cmd echo set cheatPermission=false>cheatPerm.cmd & echo [0;94m[Startup][0;0m Creating cheatPerm.cmd file
-if not exist debugPerm.cmd echo set debugPermission=false>debugPerm.cmd & echo [0;94m[Startup][0;0m Creating debugPerm.cmd file
-cd..
-if not exist Save md Save & echo [0;94m[Startup][0;0m Creating Save folder
 
 goto updateVM
 
-cd save
-echo [0;94m[Startup][0;0m Calling saved files...
-cd..
-cd Config
-cd..
+
 
 :update
 if %internet%==none echo No internet connection & goto cmdselect
@@ -47,9 +36,6 @@ if %UpdateConfirm%==y del allcomm.bat &cd Command_Miner_Update & start /min Upda
 if %UpdateConfirm%==n goto cmdselect
 goto update
 
-
-
-
 :Error0
 cls
 echo [0;31mAn unexpected error has occurred!
@@ -57,7 +43,6 @@ echo Operation was canceled[0;0m
 goto main
 
 :ErrorAdmin
-
 echo [0;31mAdministrator mode is not supported!
 echo Command Miner cannot be loaded[0;0m
 echo Press any key to exit . . . 
