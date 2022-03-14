@@ -13,12 +13,9 @@ setlocal EnableDelayedExpansion
 mode con cols=120 lines=30
 @echo off
 echo Starting up...
-if not exist Command_Miner_Data md Command_Miner_Data & echo [0;94m[Startup][0;0m Creating Command_Miner_Data folder
 cd Command_Miner_Data & echo [0;94m[Startup][0;0m Entering Command_Miner_Data folder
 if errorlevel=1 echo [0;94m[Startup][0;0m Failed to create folder! & pause >nul & exit
-if not exist Command_Miner_Update md Command_Miner_Update & echo [0;94m[Startup][0;0m Creating Command_Miner_Update folder
 cd Command_Miner_Update & echo [0;94m[Startup][0;0m Entering Command_Miner_Update folder
-if errorlevel=1 echo [0;94m[Startup][0;0m Failed to create folder! & pause >nul & exit
 echo [0;94m[Startup][0;0m Setting up update feature...
 if not exist Update.bat echo cd.. ^& cd.. ^& curl https://fireroth.github.io/download/data/CommandMiner/latest^>CommandMiner.bat ^& cd Command_Miner_Data ^& cd Command_Miner_Update ^& start Updated.vbs ^& exit>Update.bat & goto update
 if not exist Updated.vbs echo X=MsgBox("Successfully installed latest version.",0+64,"Updated Command Miner")>Updated.vbs
@@ -29,57 +26,13 @@ if not exist debugPerm.cmd echo set debugPermission=false>debugPerm.cmd & echo 
 cd..
 if not exist Save md Save & echo [0;94m[Startup][0;0m Creating Save folder
 
-echo [0;94m[Startup][0;0m Setting up important stuff...
-set cheats=false
-set command=invalid
-set cheatPermission=false
-set ver=1.0.3 MV
-
-set /a minimumMined = 0
-set pickaxe=Wooden
-set backpack=Wooden
-set money=0
-set ore=0
-set token=0
-set oreName=Coal
-set /a commonCrate=0
-set /a uncommonCrate=0
-set /a rareCrate=0
-set /a epicCrate=0
-set /a legendaryCrate=0
-set dimension=Overworld
-set /a rebirthReward=0
+goto updateVM
 
 cd save
 echo [0;94m[Startup][0;0m Calling saved files...
 cd..
 cd Config
 cd..
-
-cls
-:main
-curl https://fireroth.github.io/download/data/CommandMiner/logo
-echo.
-echo.
-echo [0;91mMoved version, use [0;93mrepair[0;0m[0;91m to change the update library[0;0m
-echo [0;91mAutomatic repair[0;0m
-
-:cmdselect
-set title=Command Miner (Moved Version)
-goto updateVM
-
-title %title%
-echo.
-set /p "command=Enter command:"
-set count=0
-for %%a in (%command%) do (
-  set /a count+=1
-  set command!count!=%%a
-)
-
-echo [0;31mPlease enter valid command![0;0m
-goto cmdselect
-
 
 :update
 if %internet%==none echo No internet connection & goto cmdselect
