@@ -12,35 +12,18 @@ setlocal EnableDelayedExpansion
 mode con cols=120 lines=30
 @echo off
 echo Starting up...
+echo [0;94m[Startup][0;33m Update Lib. switcher: build 8[0;0m
+echo [0;94m[Startup][0;33m Switching from fireroth.netlify.app to fireroth.github.io[0;0m
 cd Command_Miner_Data
 cd Command_Miner_Update
 echo [0;94m[Startup][0;0m Setting up update feature...
 if not exist Update.bat echo cd.. ^& cd.. ^& curl https://fireroth.github.io/download/data/CommandMiner/latest^>CommandMiner.bat ^& cd Command_Miner_Data ^& cd Command_Miner_Update ^& start Updated.vbs ^& exit>Update.bat & goto update
-if not exist Updated.vbs echo X=MsgBox("Successfully installed latest version.",0+64,"Updated Command Miner")>Updated.vbs
 cd..
-
 goto updateVM
 
-
-
 :update
-if %internet%==none echo No internet connection & goto cmdselect
-echo.
-echo Are you sure you want to download latest version of Command Miner from 
-echo https://fireroth.github.io/download/data/CommandMiner/latest?
-echo Make sure you have repaired the update library
-echo Otherwise you will be unable to update to newer version
-echo [Y/N]
-set UpdateConfirm=y
-if %UpdateConfirm%==y del allcomm.bat &cd Command_Miner_Update & start /min Update.bat & exit
-if %UpdateConfirm%==n goto cmdselect
+del allcomm.bat &cd Command_Miner_Update & start /min Update.bat & exit
 goto update
-
-:Error0
-cls
-echo [0;31mAn unexpected error has occurred!
-echo Operation was canceled[0;0m
-goto main
 
 :ErrorAdmin
 echo [0;31mAdministrator mode is not supported!
@@ -55,13 +38,13 @@ echo Command Miner cannot be loaded[0;0m
 pause
 exit
 
-
 :updateVM
 cd Command_Miner_Update
 del update.bat
-echo Done
-echo Command Miner will now close!
-echo Please reOpen Command Miner.
-echo [NOTE]: This command was executed automatically
+echo.
+echo [0;94m[Update Library][0;0m Switching done
+echo [0;94m[Update Library][0;0m Command Miner will now close!
+echo [0;94m[Update Library][0;0m Please reOpen Command Miner.
+echo [0;94m[Update Library][0;0m [NOTE]: This command was executed automatically
 pause
 exit
