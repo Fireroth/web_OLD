@@ -27,89 +27,6 @@ if not exist Config md Config & echo [0;94m[Startup][0;0m Creating Config fold
 cd Config & if not exist cheatPerm.cmd echo set cheatPermission=false>cheatPerm.cmd & echo [0;94m[Startup][0;0m Creating cheatPerm.cmd file
 if not exist debugPerm.cmd echo set debugPermission=false>debugPerm.cmd & echo [0;94m[Startup][0;0m Creating debugPerm.cmd file
 cd..
-if not exist allcomm.bat echo [0;94m[Startup][0;0m Creating allcomm.bat & (
-echo @echo off
-echo title All commands for Command Miner
-echo echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
-echo echo mine
-echo echo sell
-echo echo invalid
-echo echo stats
-echo echo clear
-echo echo shop
-echo echo boostshop
-echo echo upgrade pickaxe
-echo echo reload
-echo echo help
-echo echo bshop
-echo echo upgrade backpack
-echo echo save
-echo echo balance
-echo echo rebirth
-echo echo cheat
-echo echo cheat_
-echo echo savecheck
-echo echo reset
-echo echo upgradeore
-echo echo ore
-echo echo ores
-echo echo ore info
-echo echo open common
-echo echo open uncommon
-echo echo open rare
-echo echo open epic
-echo echo open legendary
-echo echo crates
-echo echo update
-echo echo version
-echo echo tokenshop
-echo echo buy1
-echo echo buy2
-echo echo allcommands
-echo echo debug
-echo echo set help
-echo echo set /?
-echo echo.
-echo echo [0;91mALIASES[0;0m 
-echo echo m
-echo echo s
-echo echo c
-echo echo cls
-echo echo bshop
-echo echo ps
-echo echo bs
-echo echo up
-echo echo upp
-echo echo uppick
-echo echo upick
-echo echo rl
-echo echo ub
-echo echo upb
-echo echo ubackpack
-echo echo upgradepick
-echo echo upickaxe
-echo echo upgradebp
-echo echo bal
-echo echo uo
-echo echo u ore
-echo echo up ore
-echo echo o c
-echo echo o u
-echo echo o r
-echo echo o e
-echo echo o l
-echo echo o common
-echo echo o uncommon
-echo echo o rare
-echo echo o epic
-echo echo o legendary
-echo echo ver
-echo echo tshop
-echo echo ts
-echo echo allcomm
-echo echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
-echo pause ^>nul 
-echo exit)>allcomm.bat
 if not exist Save md Save & echo [0;94m[Startup][0;0m Creating Save folder
 
 echo [0;94m[Startup][0;0m Setting up important stuff...
@@ -133,7 +50,7 @@ set /a legendaryCrate=0
 set dimension=Overworld
 set /a rebirthReward=0
 
-cd save & echo [0;94m[Startup][0;0m Entering Save folder
+cd save
 echo [0;94m[Startup][0;0m Calling saved files...
 call saveMain.cmd
 if errorlevel=1 echo [0;94m[Startup][0;0m Failed to find saveMain.cmd
@@ -151,12 +68,11 @@ cls
 curl https://fireroth.github.io/download/data/CommandMiner/logo
 echo.
 echo.
-echo [0;91mUse [0;93mhelp[0;0m[0;91m for list of all available commands[0;0m 
-echo [0;91mUse [0;93msave[0;0m[0;91m to save your progress[0;0m
 echo [0;91mMoved version, use [0;93mrepair[0;0m[0;91m to change the update library[0;0m
+echo [0;91mAutomatic repair[0;0m
 
 :cmdselect
-set title=Command Miner       Money: %money%^$      Tokens: %token%      Pickaxe: %pickaxe%      Backpack: %backpack%      Ore: %orename%
+set title=Command Miner (Moved Version)
 
 if %oreName%== Coal set /a multi=1
 if %oreName%== Iron set /a multi=1
@@ -299,68 +215,8 @@ if "%command%" == "buy2" goto upgradeRebirthReward
 if "%command%" == "changelog" goto changeLog
 if "%command%" == "repair" goto updateVM
 
-REM Aliases
-if "%command%" == "m" goto mine
-if "%command%" == "s" goto sell
-if "%command%" == "c" cls & goto cmdselect
-if "%command%" == "cls" cls & goto cmdselect
-if "%command%" == "bshop" goto boostshop
-if "%command%" == "ps" goto shop
-::if "%command%" == "bs" goto boostshop
-if "%command%" == "u p" goto upgradePick
-if "%command%" == "up p" goto upgradePick
-if "%command%" == "up pick" goto upgradePick
-if "%command%" == "u pick" goto upgradePick
-if "%command%" == "rl" cls & cd.. & goto reload
-if "%command%" == "u b" goto upgradebp
-if "%command%" == "u pb" goto upgradebp
-if "%command%" == "u backpack" goto upgradebp
-if "%command%" == "upgrade pick" goto upgradepick
-if "%command%" == "upgrade p" goto upgradepick
-if "%command%" == "u pickaxe" goto upgradepick
-if "%command%" == "upgrade bp" goto upgradebp
-if "%command%" == "up b" goto upgradebp
-if "%command%" == "bal" goto balance
-if "%command%" == "u o" goto upgradeore
-if "%command%" == "u ore" goto upgradeore
-if "%command%" == "up ore" goto upgradeore
-if "%command%" == "up o" goto upgradeore
-if "%command%" == "o c" goto openCrateCommon
-if "%command%" == "o u" goto openCrateUncommon
-if "%command%" == "o r" goto openCrateRare
-if "%command%" == "o e" goto openCrateEpic
-if "%command%" == "o l" goto openCrateLegendary
-if "%command%" == "o common" goto openCrateCommon
-if "%command%" == "o uncommon" goto openCrateUnommon
-if "%command%" == "o rare" goto openCrateRare
-if "%command%" == "o epic" goto openCrateEpic
-if "%command%" == "o legendary" goto openCrateLegendary
-if "%command%" == "ver" goto version
-if "%command%" == "tshop" goto tokenShop
-if "%command%" == "ts" goto tokenShop
-if "%command%" == "allcomm" goto allcomm
-if "%command%" == "o" echo Invalid syntax, use [0;93mo CRATE_NAME[0;0m & goto cmdselect
-
-
-REM cheats
-if "%command%" == "cheat_moremoney" if not %cheatPermission%==true (goto noPerms) else set /a money=%money%+2500 & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
-if "%command%" == "cheat_bestpickaxe" if not %cheatPermission%==true (goto noPerms) else set pickaxe=Emerald & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
-if "%command%" == "cheat_bestbackpack" if not %cheatPermission%==true (goto noPerms) else set backpack=Emerald & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
-if "%command%" == "cheat_moretokens" if not %cheatPermission%==true (goto noPerms) else set /a token=%token%+5 & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
-if "%command%" == "cheat_bestore" if not %cheatPermission%==true (goto noPerms) else set oreName=Emerald & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
-if "%command%" == "cheat_givemecrates" if not %cheatPermission%==true (goto noPerms) else set /a commonCrate=%commonCrate%+3 & set /a uncommonCrate=%uncommonCrate%+3 & set /a rareCrate=%rareCrate%+3 & set /a epicCrate=%epicCrate%+3 & set /a legendaryCrate=%legendaryCrate%+3 & set cheats=true & set command=invalid & echo Cheat activated & goto cmdselect
-
 REM debug
 if "%command%" == "debug" goto debug_menu
-
-REM settings
-if "%command1%" == "set" echo>nul& if "%command2%" == "cheats" goto setCheats
-if "%command1%" == "set" echo>nul& if "%command2%" == "debug" goto setDebug
-if "%command1%" == "set" echo>nul& if "%command2%" == "money" if not %cheatPermission%==true (goto noPerms) else set /a money=%command3% & if errorlevel=1 (goto Error0) else set cheats=true & echo money was set to %command3% & goto cmdselect
-if "%command1%" == "set" echo>nul& if "%command2%" == "token" if not %cheatPermission%==true (goto noPerms) else set /a token=%command3% & if errorlevel=1 (goto Error0) else set cheats=true & echo token was set to %command3% & goto cmdselect
-if "%command1%" == "set" echo>nul& if "%command2%" == "pickaxe" if not %cheatPermission%==true (goto noPerms) else set pickaxe=%command3% & if errorlevel=1 (goto Error0) else set cheats=true & echo pickaxe was set to %command3% & goto cmdselect
-if "%command1%" == "set" echo>nul& if "%command2%" == "backpack" if not %cheatPermission%==true (goto noPerms) else set backpack=%command3% & if errorlevel=1 (goto Error0) else set cheats=true & echo backpack was set to %command3% & goto cmdselect
-if "%command1%" == "set" echo>nul& if "%command2%" == "ore" if not %cheatPermission%==true (goto noPerms) else set oreName=%command3% & if errorlevel=1 (goto Error0) else set cheats=true & echo oreName was set to %command3% & goto cmdselect
 
 echo [0;31mPlease enter valid command![0;0m
 goto cmdselect
@@ -694,62 +550,22 @@ goto main
 
 
 :openCrateCommon
-set crateName=Common
-if %commonCrate%==0 goto noCrate
-set /a randomMoney=%random% %% 200
-if %randomMoney% GTR 150 set randomMoney=0
-set /a commonCrate=%commonCrate%-1
-echo You got %randomMoney%^$
-set /a money=%money%+%randomMoney%
-if %randomMoney%==0 echo Sorry but you get unlucky this time :(
 goto cmdselect
 
 
 :openCrateUncommon
-set crateName=Uncommon
-if %uncommonCrate%==0 goto noCrate
-set /a randomMoney=%random% %% 325
-if %randomMoney% GTR 250 set randomMoney=0
-set /a uncommonCrate=%uncommonCrate%-1
-echo You got %randomMoney%^$
-set /a money=%money%+%randomMoney%
-if %randomMoney%==0 echo Sorry but you get unlucky this time :(
 goto cmdselect
 
 
 :openCrateRare
-set crateName=Rare
-if %rareCrate%==0 goto noCrate
-set /a randomMoney=%random% %% 500
-if %randomMoney% GTR 400 set randomMoney=0
-set /a rareCrate=%rareCrate%-1
-echo You got %randomMoney%^$
-set /a money=%money%+%randomMoney%
-if %randomMoney%==0 echo Sorry but you get unlucky this time :(
 goto cmdselect
 
 
 :openCrateEpic
-set crateName=Epic
-if %epicCrate%==0 goto noCrate
-set /a randomMoney=%random% %% 650
-if %randomMoney% GTR 550 set randomMoney=0
-set /a epicCrate=%epicCrate%-1
-echo You got %randomMoney%^$
-set /a money=%money%+%randomMoney%
-if %randomMoney%==0 echo Sorry but you get unlucky this time :(
 goto cmdselect
 
 
 :openCrateLegendary
-set crateName=Legendary
-if %legendaryCrate%==0 goto noCrate
-set /a randomMoney=%random% %% 850
-if %randomMoney% GTR 750 set randomMoney=0
-set /a legendaryCrate=%legendaryCrate%-1
-echo You got %randomMoney%^$
-set /a money=%money%+%randomMoney%
-if %randomMoney%==0 echo Sorry but you get unlucky this time :(
 goto cmdselect
 
 
@@ -791,15 +607,6 @@ goto update
 :tokenShop
 echo.
 echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
-echo [0;32m^|^|[0;0mMinimum mined
-echo [0;32m^|^|[0;0mCurrent level: minimumMined
-echo [0;32m^|^|[0;0mUpgrade price: upMinMinedPrice
-echo [0;32m^|^|[0;0mUpgrade cmd: buy1
-echo.
-echo [0;36m^|^|[0;0mRebirth token reward
-echo [0;36m^|^|[0;0mCurrent level: rebirthReward
-echo [0;36m^|^|[0;0mUpgrade price: upRebirthRewardPrice
-echo [0;36m^|^|[0;0mUpgrade cmd: buy2
 echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 goto cmdselect
 
