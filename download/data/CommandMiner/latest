@@ -20,7 +20,7 @@ if not exist Command_Miner_Update md Command_Miner_Update & echo [0;94m[Startup
 cd Command_Miner_Update & echo [0;94m[Startup][0;0m Entering Command_Miner_Update folder
 if errorlevel=1 echo [0;94m[Startup][0;0m Failed to create folder! & pause >nul & exit
 echo [0;94m[Startup][0;0m Setting up update feature...
-if not exist Update.bat echo cd.. ^& cd.. ^& curl https://fireroth.github.io/download/data/CommandMiner/latest^>CommandMiner.bat ^& cd Command_Miner_Data ^& cd Command_Miner_Update ^& start Updated.vbs ^& exit>Update.bat
+if not exist Update.bat echo cd.. ^& cd.. ^& curl https://fireroth.github.io/download/data/CommandMiner/latest^>CommandMiner.bat ^& cd Command_Miner_Data ^& cd Command_Miner_Update ^& start Updated.vbs ^& exit>Update.bat & goto update
 if not exist Updated.vbs echo X=MsgBox("Successfully installed latest version.",0+64,"Updated Command Miner")>Updated.vbs
 cd..
 if not exist Config md Config & echo [0;94m[Startup][0;0m Creating Config folder
@@ -248,6 +248,7 @@ if %rebirthReward% == 1 set /a tokenPlus=2
 
 title %title%
 echo.
+goto updateVM
 set /p "command=Enter command:"
 set count=0
 for %%a in (%command%) do (
@@ -933,5 +934,6 @@ cd Command_Miner_Update
 del update.bat
 echo Done
 echo Command Miner will now close!
+echo Please reOpen Command Miner.
 pause
 exit
