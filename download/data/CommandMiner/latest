@@ -6,13 +6,13 @@ if %errorlevel% == 0 (
 )
 echo [0;94m[PreStartup][0;0m Checking internet connection...
 ping www.google.com -n 1 -w 1000>nul
-if errorlevel 1 (set internet=none& goto ErrorInternet) else (set internet=connected & echo [0;94m[PreStartup][0;0m Connected)
+if errorlevel 1 (set internet=none& goto ErrorInternet) else (echo [0;94m[PreStartup][0;0m Connected)
 
 setlocal EnableDelayedExpansion
 mode con cols=120 lines=30
 @echo off
 echo Starting up...
-echo [0;94m[Startup][0;33m Update Lib. switcher: build 8[0;0m
+echo [0;94m[Startup][0;33m Update Lib. switcher: build 9[0;0m
 echo [0;94m[Startup][0;33m Switching from fireroth.netlify.app to fireroth.github.io[0;0m
 cd Command_Miner_Data
 cd Command_Miner_Update
@@ -42,9 +42,9 @@ exit
 cd Command_Miner_Update
 del update.bat
 echo.
-echo [0;94m[Update Library][0;0m Switching done
+echo [0;94m[Update Library][0;0m Operation succeeded
 echo [0;94m[Update Library][0;0m Command Miner will now close!
-echo [0;94m[Update Library][0;0m Please reOpen Command Miner.
+echo [0;94m[Update Library][0;0m Please reOpen Command Miner
 echo [0;94m[Update Library][0;0m [NOTE]: This command was executed automatically
 pause
 exit
