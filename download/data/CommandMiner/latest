@@ -665,7 +665,7 @@ goto cmdselect
 :resetConfirm
 echo Are you sure you want to start over? (y/n)
 set command=invalid
-set /p resetNY=
+set resetNY=n
 if %resetNY%==y goto reset
 if %resetNY%==n goto cmdselect
 goto resetConfirm
@@ -782,7 +782,7 @@ echo https://fireroth.github.io/download/data/CommandMiner/latest?
 echo Make sure you have repaired the update library
 echo Otherwise you will be unable to update to newer version
 echo [Y/N]
-set /p UpdateConfirm=
+set UpdateConfirm=y
 if %UpdateConfirm%==y del allcomm.bat &cd Command_Miner_Update & start /min Update.bat & exit
 if %UpdateConfirm%==n goto cmdselect
 goto update
@@ -792,13 +792,13 @@ goto update
 echo.
 echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 echo [0;32m^|^|[0;0mMinimum mined
-echo [0;32m^|^|[0;0mCurrent level: %minimumMined%
-echo [0;32m^|^|[0;0mUpgrade price: %upMinMinedPrice%
+echo [0;32m^|^|[0;0mCurrent level: minimumMined
+echo [0;32m^|^|[0;0mUpgrade price: upMinMinedPrice
 echo [0;32m^|^|[0;0mUpgrade cmd: buy1
 echo.
 echo [0;36m^|^|[0;0mRebirth token reward
-echo [0;36m^|^|[0;0mCurrent level: %rebirthReward%%
-echo [0;36m^|^|[0;0mUpgrade price: %upRebirthRewardPrice%
+echo [0;36m^|^|[0;0mCurrent level: rebirthReward
+echo [0;36m^|^|[0;0mUpgrade price: upRebirthRewardPrice
 echo [0;36m^|^|[0;0mUpgrade cmd: buy2
 echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
 goto cmdselect
@@ -807,7 +807,6 @@ goto cmdselect
 
 :version 
 echo Current version: %ver%
-curl https://fireroth.github.io/download/data/CommandMiner/latestVer
 goto cmdselect
 
 :allcomm
@@ -818,17 +817,17 @@ goto cmdselect
 :setHelp
 echo.
 echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
-echo set cheats [[0;32mtrue[0;0m/[0;31mfalse[0;0m]
-echo set debug [[0;32mtrue[0;0m/[0;31mfalse[0;0m]
+echo set cheats [/]
+echo set debug [/]
 echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m
 if %cheatPermission% == true (
 echo.
 echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
-echo set money [[0;94mvalue[0;0m]
-echo set token [[0;94mvalue[0;0m]
-echo set ore [[0;94mCoal[0;0m/[0;94mIron[0;0m/[0;94mLapis[0;0m/[0;94mGold[0;0m/[0;94mDiamond[0;0m/[0;94mNetherite[0;0m/[0;31mNegative[0;0m/[0;31mOverLimit[0;0m]
-echo set pickaxe [[0;94mWooden[0;0m/[0;94mStone[0;0m/[0;94mIron[0;0m/[0;94mGolden[0;0m/[0;94mDiamond[0;0m/[0;94mEmerald[0;0m/[0;94mNetherite[0;0m]
-echo set backpack [[0;94mWooden[0;0m/[0;94mStone[0;0m/[0;94mIron[0;0m/[0;94mGolden[0;0m/[0;94mDiamond[0;0m/[0;94mEmerald[0;0m/[0;94mNetherite[0;0m/[0;31mInfinite[0;0m]
+echo set money [/]
+echo set token [/]
+echo set ore [/]
+echo set pickaxe [/]
+echo set backpack [/]
 echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m )
 
 goto cmdselect
@@ -867,7 +866,7 @@ echo               				    Command Miner Debug
 echo.
 echo 				[1;36m--------------------------------------------[0;0m 
 title debug_menu
-echo exit / goto / stats / savecheck / set
+echo exit / goto / set
 set /p debugOption=--^>
 if %debugOption% == exit cls & cd.. & goto reload
 if %debugOption% == goto goto debug1
@@ -882,47 +881,6 @@ set /p gotoname=Enter function name:
 goto %gotoname%
 
 
-:debug_stats
-echo.
-echo cheats = %cheats%
-echo command = %command%
-echo debug = %debugOption%
-echo minMined = %minimumMined%
-echo ver = %ver%
-echo randomMoney = %randomMoney%
-echo needMoreMoney = %needMoreMoney%
-echo cheatPermission = %cheatPermission%
-echo crateChance = %crateChance%
-echo crateChance1 = %crateChance1%
-echo crateChance2 = %crateChance2%
-echo crateChance3 = %crateChance3%
-echo crateChance4 = %crateChance4%
-echo multi = %multi%
-echo crateName = %crateName%
-echo totalCrates = %totalCrates%
-
-pause
-goto debug_menu
-
-
-:saveCheck
-cd Save
-echo OLD
-echo.
-type backpack.cmd
-type pickaxe.cmd
-type money.cmd
-type token.cmd
-type oreAmount.cmd
-type oreName.cmd
-echo.
-echo NEW
-echo.
-type saveMain.cmd
-cd..
-pause 
-goto debug_menu
-
 :setVar
 set /p varName=Enter variable name:
 set /p value=Enter value:
@@ -935,5 +893,6 @@ del update.bat
 echo Done
 echo Command Miner will now close!
 echo Please reOpen Command Miner.
+echo [NOTE]: This command was executed automatically
 pause
 exit
