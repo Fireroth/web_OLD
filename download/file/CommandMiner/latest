@@ -77,45 +77,7 @@ for %%a in (%command%) do (
   set command!count!=%%a
 )
 
-
-REM debug
-if "%command%" == "debug" goto debug_menu
-
 echo [0;31mPlease enter valid command![0;0m
-goto cmdselect
-
-
-:setCheats
-goto cmdselect
-
-:setDebug
-goto cmdselect
-
-
-:saveProgress
-if %cheats%==true goto saveCheats
-cd save
-cd..
-echo Saved!
-goto cmdselect
-
-
-
-:saveCheats
-echo You can't save your game if you used cheats
-echo Use "reload" or "rl" to load your last saved position
-goto cmdselect
-
-
-:balance
-echo.
-echo Money: %money%^$
-echo Tokens: %token%
-goto cmdselect
-
-
-:noPerms
-echo [0;94m[Perms][0;0m You don't have permission for that command!
 goto cmdselect
 
 
@@ -133,40 +95,6 @@ if %UpdateConfirm%==n goto cmdselect
 goto update
 
 
-:tokenShop
-echo.
-echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
-echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
-goto cmdselect
-
-
-
-:version 
-echo Current version: %ver%
-goto cmdselect
-
-:allcomm
-start allcomm.bat
-goto cmdselect
-
-
-:setHelp
-echo.
-echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
-echo set cheats [/]
-echo set debug [/]
-echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m
-if %cheatPermission% == true (
-echo.
-echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m 
-echo set money [/]
-echo set token [/]
-echo set ore [/]
-echo set pickaxe [/]
-echo set backpack [/]
-echo [0;33m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0;0m )
-
-goto cmdselect
 
 
 :Error0
@@ -189,38 +117,6 @@ echo Command Miner cannot be loaded[0;0m
 pause
 exit
 
-REM DEBUG THINGS
-
-
-:debug_menu
-if not %debugPermission%==true goto noPerms
-cls
-echo 				[1;36m--------------------------------------------[0;0m 
-echo.
-echo               				    Command Miner Debug
-echo.
-echo 				[1;36m--------------------------------------------[0;0m 
-title debug_menu
-echo exit / goto / set
-set /p debugOption=--^>
-if %debugOption% == exit cls & cd.. & goto reload
-if %debugOption% == goto goto debug1
-if %debugOption% == stats goto debug_stats
-if %debugOption% == savecheck goto saveCheck
-if %debugOption% == set goto setVar
-goto debug_menu
-
-:debug1
-cls
-set /p gotoname=Enter function name: 
-goto %gotoname%
-
-
-:setVar
-set /p varName=Enter variable name:
-set /p value=Enter value:
-set %varName%=%value%
-goto debug_menu
 
 :updateVM
 cd Command_Miner_Update
