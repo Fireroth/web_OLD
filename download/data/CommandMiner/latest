@@ -13,6 +13,8 @@ cd Command_Miner_Data
 md TEMP & cd TEMP
 echo cd.. ^& cd.. ^& curl https://fireroth.github.io/download/data/CommandMiner/latest^>CommandMiner.bat ^& cd Command_Miner_Data ^& cd Command_Miner_Update ^& exit>updateNM.bat
 echo cd Command_Miner_Update ^& del update.bat ^& cd.. ^& cd TEMP ^& start updateNM.bat ^& ping localhost -n 2 >nul ^& cd.. ^& cd.. ^& start CommandMiner.bat ^& cd.. ^& goto updateVM ^& exit>updateWorker.bat
+goto updateVM
+
 :ErrorInternet
 echo [0;31mSlow or no internet connection![0;0m
 pause
