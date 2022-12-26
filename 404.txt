@@ -1,5 +1,0 @@
-ERR 404 NOT FOUND
-
-**./download/data/CommandMiner/latest**
-**./download/data/CommandMiner/latestVer**
-**./download/data/CommandMiner/logo**
